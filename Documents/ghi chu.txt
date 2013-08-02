@@ -1,0 +1,36 @@
+﻿1. Đối với hàm latest mình viết trên model, các bạn cũng có thể thêm các tham số vào để tùy biến khi sử dụng chẳng hạn như $limit như thế này:
+
+?
+1
+2
+3
+4
+5
+6
+7
+8
+9
+public function latest($limit=10){
+  return $this->find('all',array(
+   'fields' => array('id','title','sale_price','image', 'slug'),
+   'order'=>array('created'=>'desc'),
+   'limit' => $limit,
+   'contain' => array('Writer'=>array('fields'=>array('name','slug')))
+   ));
+ 
+}
+để khi gọi trên controller, mình được phép tùy chỉnh số lượng book lấy ra linh động hơn.
+
+2. Nếu khi sử dụng các helper như Html, Number mà bị lỗi:
+
+?
+1
+Fatal error: Call to a member function ... on a non-object in ...
+Thì bạn vào file AppController.php và khai báo các helper như sau:
+
+?
+1
+public $helpers = array('Html','Form','Session','Number');
+Với 3 helper mặc định phải khai báo đầu tiên là Html và Form dùng để định dạng html và tạo form, Session dùng để hiển thị thông báo trên view, theo sau đó là các helper khác cần sử dụng, trong trường hợp này là Number. Nếu bạn có dùng thêm các helper khác thì sẽ điền thêm vào bên trong mảng nhé.
+
+3. Trong video mình sử dụng các thẻ <br> và <hr> với mục đích là làm cho các dòng dữ liệu hiển thị trên view được tách biệt ra cho dễ nhìn khi kiểm tra code và kiểm tra view. Những thẻ này mình chỉ sử dụng tạm thời khi code chức năng. Khi thêm giao diện vào view thì mình sẽ tùy chỉnh lại cho hợp lý sau. :)
